@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio de Lectura - Juan 1:1-5 (Griego Koiné)</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        .container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+        }
+        .passage {
+            font-size: 1.5rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-family: 'Noto Sans', 'Arial Unicode MS', Arial, sans-serif; /* Fuente que soporta griego */
+            direction: ltr; /* Texto en griego se lee de izquierda a derecha */
+        }
+        .controls {
+            margin-bottom: 20px;
+        }
+        button {
+            background-color: #2575fc;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin: 5px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #1a5bbf;
+        }
+        .recording-status {
+            margin-top: 10px;
+            font-weight: bold;
+            color: #e74c3c;
+        }
+        .audio-player {
+            margin-top: 20px;
+        }
+    </style>
+    <script>
+        // Verificar autenticación al cargar la página
+        if(!localStorage.getItem('authenticated')) {
+            window.location.href = "../login.html";
+        }
+    </script>
+    <script>
+        // Verificar autenticación al cargar la página
+        if(!localStorage.getItem('authenticated')) {
+            window.location.href = "../login.html";
+        }
+    </script>
+    <!-- Cargar la fuente Noto Sans desde Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap" rel="stylesheet">
+</head>
+<body>
+    <h1>Ejercicio de Lectura - Juan 1:1-5 (Griego Koiné)</h1>
+    <div class="container">
+        <div class="passage">
+            <p><strong>Juan 1:1-5 (Griego Koiné)</strong></p>
+            <p>
+                Ἐν ἀρχῇ ἦν ὁ λόγος, καὶ ὁ λόγος ἦν πρὸς τὸν θεόν, καὶ θεὸς ἦν ὁ λόγος.
+                οὗτος ἦν ἐν ἀρχῇ πρὸς τὸν θεόν.
+                πάντα διʼ αὐτοῦ ἐγένετο, καὶ χωρὶς αὐτοῦ ἐγένετο οὐδὲ ἕν.
+                ὃ γέγονεν ἐν αὐτῷ ζωὴ ἦν, καὶ ἡ ζωὴ ἦν τὸ φῶς τῶν ἀνθρώπων·
+                καὶ τὸ φῶς ἐν τῇ σκοτίᾳ φαίνει, καὶ ἡ σκοτία αὐτὸ οὐ κατέλαβεν.
+            </p>
+            <p><em>(Juan 1:1–5, NA28 GBS)</em></p>
+        </div>
+        <div class="controls">
+            <button id="play-audio">Reproducir Audio en Griego Koiné</button>
+            <button id="start-record">Comenzar Grabación</button>
+            <button id="stop-record" disabled>Detener Grabación</button>
+        </div>
+        <div class="recording-status" id="recording-status">Grabación no iniciada</div>
+        <div class="audio-player" id="audio-player"></div>
+    </div>
+
+    <script>
+        // Texto del pasaje en griego koiné (corregido)
+        const passageText = `Ἐν ἀρχῇ ἦν ὁ λόγος, καὶ ὁ λόγος ἦν πρὸς τὸν θεόν, καὶ θεὸς ἦν ὁ λόγος.
+        οὗτος ἦν ἐν ἀρχῇ πρὸς τὸν θεόν.
+        πάντα διʼ αὐτοῦ ἐγένετο, καὶ χωρὶς αὐτοῦ ἐγένετο οὐδὲ ἕν.
+        ὃ γέγονεν ἐν αὐτῷ ζωὴ ἦν, καὶ ἡ ζωὴ ἦν τὸ φῶς τῶν ἀνθρώπων·
+        καὶ τὸ φῶς ἐν τῇ σκοτίᾳ φαίνει, καὶ ἡ σκοτία αὐτὸ οὐ κατέλαβεν.`;
+
+        // Ruta al archivo de audio (puede ser un enlace en línea o local)
+        const audioUrl = "audio.wav"; // Cambia esto
+
+        // Botón para reproducir el audio pregrabado
+        document.getElementById('play-audio').addEventListener('click', () => {
+            const audio = new Audio(audioUrl);
+            audio.play();
+        });
+
+        // Configuración de la grabación de audio
+        let mediaRecorder;
+        let audioChunks = [];
+        const startRecordButton = document.getElementById('start-record');
+        const stopRecordButton = document.getElementById('stop-record');
+        const recordingStatus = document.getElementById('recording-status');
+        const audioPlayer = document.getElementById('audio-player');
+
+        // Solicitar permiso para grabar audio
+        navigator.mediaDevices.getUserMedia({ audio: true })
+            .then(stream => {
+                mediaRecorder = new MediaRecorder(stream);
+
+                mediaRecorder.ondataavailable = (event) => {
+                    audioChunks.push(event.data);
+                };
+
+                mediaRecorder.onstop = () => {
+                    const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                    const audioUrl = URL.createObjectURL(audioBlob);
+                    audioPlayer.innerHTML = `<audio controls src="${audioUrl}"></audio>`;
+                    recordingStatus.textContent = "Grabación detenida";
+                };
+            })
+            .catch(error => {
+                console.error("Error al acceder al micrófono:", error);
+            });
+
+        // Iniciar grabación
+        startRecordButton.addEventListener('click', () => {
+            audioChunks = [];
+            mediaRecorder.start();
+            recordingStatus.textContent = "Grabando...";
+            startRecordButton.disabled = true;
+            stopRecordButton.disabled = false;
+        });
+
+        // Detener grabación
+        stopRecordButton.addEventListener('click', () => {
+            mediaRecorder.stop();
+            startRecordButton.disabled = false;
+            stopRecordButton.disabled = true;
+        });
+    </script>
+</body>
+</html>

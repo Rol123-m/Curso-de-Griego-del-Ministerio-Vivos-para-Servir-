@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aprendiendo Griego Koiné: Los Primeros Dos Casos</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+    }
+    header {
+      background-color: #4CAF50;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    h1 {
+      margin: 0;
+      font-size: 2.5rem;
+    }
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      background: white;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+      color: #4CAF50;
+      margin-top: 0;
+    }
+    .pronunciation {
+      background-color: #e8f5e9;
+      padding: 15px;
+      border-left: 5px solid #4CAF50;
+      margin: 20px 0;
+    }
+    .rules {
+      background-color: #fff3e0;
+      padding: 15px;
+      border-left: 5px solid #ff9800;
+      margin: 20px 0;
+    }
+    .rules ul {
+      list-style-type: decimal;
+      padding-left: 20px;
+    }
+    .rules li {
+      margin-bottom: 10px;
+    }
+    .quiz {
+      background-color: #fff3e0;
+      padding: 15px;
+      border-left: 5px solid #ff9800;
+      margin: 20px 0;
+    }
+    .quiz-question {
+      margin-bottom: 15px;
+    }
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .quiz-options label {
+      display: block;
+      padding: 10px;
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      cursor: pointer;
+    }
+    .quiz-options label:hover {
+      background-color: #f1f1f1;
+    }
+    .quiz-options input[type="radio"] {
+      margin-right: 10px;
+    }
+    .result {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    .correct {
+      color: green;
+    }
+    .incorrect {
+      color: red;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+     /* Nuevos estilos para el footer */
+     footer {
+      text-align: center;
+      padding: 15px 0;
+      margin-top: 40px;
+      border-top: 1px solid #e0e0e0;
+      font-size: 0.8rem;
+      color: #666;
+    }
+    footer img {
+      max-width: 120px;
+      height: auto;
+      margin-bottom: 8px;
+      opacity: 0.8;
+    }
+    #foot {
+      margin: 0;
+      font-style: italic;
+    }
+  </style>
+  <script>
+    // Verificar autenticación al cargar la página
+    if(!localStorage.getItem('authenticated')) {
+        window.location.href = "../login.html";
+    }
+</script>
+</head>
+<body>
+  <header>
+    <h1>Aprendiendo Griego Koiné: Los Primeros Dos Casos</h1>
+  </header>
+  <div class="container">
+    <section>
+      <h2>El Caso Nominativo</h2>
+      <div class="pronunciation">
+        <p>El caso nominativo se utiliza para indicar el <strong>sujeto</strong> de una oración. Si una palabra es el sujeto del verbo, llevará una terminación de caso nominativo. Por ejemplo, una de las terminaciones del nominativo singular es <strong>ς</strong>.</p>
+        <p>En la siguiente oración, ¿cuál es el sujeto? (<strong>ἀγαπᾷ</strong> significa "ama" y <strong>τόν</strong> significa "el"):</p>
+        <p><strong>ὁ θεὸς ἀγαπᾷ τὸν κόσμον.</strong> (Dios ama al mundo).</p>
+        <p>El sujeto es <strong>ὁ θεὸς</strong> (Dios), ya que lleva la terminación nominativa <strong>ς</strong>.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>El Caso Acusativo</h2>
+      <div class="pronunciation">
+        <p>El caso acusativo se utiliza para indicar el <strong>objeto directo</strong> de una oración. Si una palabra es el objeto directo del verbo, llevará una terminación de caso acusativo. Una de las terminaciones del acusativo singular es <strong>ν</strong>.</p>
+        <p>En la siguiente oración, ¿cuál es el objeto directo?</p>
+        <p><strong>Χριστὸν ἀγαπᾷ ὁ θεός.</strong> (Dios ama a Cristo).</p>
+        <p>El objeto directo es <strong>Χριστὸν</strong> (Cristo), ya que lleva la terminación acusativa <strong>ν</strong>.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Orden de las Palabras y Léxicos</h2>
+      <div class="rules">
+        <p>En griego, el orden de las palabras no determina su función en la oración, como sucede en español. La función de una palabra se determina únicamente por sus <strong>terminaciones de caso</strong>.</p>
+        <p>Por ejemplo, en las siguientes oraciones, aunque el orden de las palabras cambia, el significado sigue siendo el mismo ("Dios ama al mundo"):</p>
+        <ul>
+          <li><strong>Θεὸς ἀγαπᾷ τὸν κόσμον.</strong></li>
+          <li><strong>ἀγαπᾷ τὸν κόσμον Θεός.</strong></li>
+          <li><strong>τὸν κόσμον Θεὸς ἀγαπᾷ.</strong></li>
+          <li><strong>ἀγαπᾷ Θεὸς τὸν κόσμον.</strong></li>
+        </ul>
+        <p>Como regla general, al traducir, intenta mantener el mismo orden que el griego para evitar errores.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Léxicos y Forma Léxica</h2>
+      <div class="pronunciation">
+        <p>Los léxicos son diccionarios especializados para el griego. La forma léxica de un sustantivo es su forma en <strong>nominativo singular</strong>. Por ejemplo, la forma léxica de <strong>κόσμον</strong> (acusativo singular) es <strong>κόσμος</strong>.</p>
+        <p>Es esencial conocer la forma léxica de una palabra para poder buscarla en el léxico y encontrar su significado.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Repaso de lo Aprendido</h2>
+      <div class="rules">
+        <p>Hasta ahora, has aprendido lo siguiente:</p>
+        <ul>
+          <li>El griego usa diferentes terminaciones de caso para indicar el caso (nominativo, acusativo), el género (masculino, femenino, neutro) y el número (singular, plural).</li>
+          <li>La raíz de una palabra es su forma básica, que lleva su significado. Se obtiene al eliminar la terminación de caso.</li>
+          <li>Las raíces que terminan en alfa o eta son de la primera declinación; las que terminan en ómicron son de la segunda declinación.</li>
+          <li>Si una palabra es el sujeto de un verbo, está en caso nominativo y usa terminaciones nominativas.</li>
+          <li>Si una palabra es el objeto directo de un verbo, está en caso acusativo y usa terminaciones acusativas.</li>
+          <li>El orden de las palabras no determina su función en la oración.</li>
+          <li>La forma léxica de un sustantivo es su forma en nominativo singular.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2>Comprueba tu Conocimiento</h2>
+      <div class="quiz">
+        <div class="quiz-question">
+          <p><strong>Pregunta 1:</strong> ¿Qué caso indica el sujeto de una oración?</p>
+          <div class="quiz-options">
+            <label><input type="radio" name="q1" value="a"> Nominativo</label>
+            <label><input type="radio" name="q1" value="b"> Acusativo</label>
+            <label><input type="radio" name="q1" value="c"> Genitivo</label>
+          </div>
+          <div class="result" id="result1"></div>
+        </div>
+
+        <div class="quiz-question">
+          <p><strong>Pregunta 2:</strong> ¿Qué terminación de caso indica el objeto directo en singular?</p>
+          <div class="quiz-options">
+            <label><input type="radio" name="q2" value="a"> ς</label>
+            <label><input type="radio" name="q2" value="b"> ν</label>
+            <label><input type="radio" name="q2" value="c"> α</label>
+          </div>
+          <div class="result" id="result2"></div>
+        </div>
+
+        <div class="quiz-question">
+          <p><strong>Pregunta 3:</strong> ¿Qué determina la función de una palabra en griego?</p>
+          <div class="quiz-options">
+            <label><input type="radio" name="q3" value="a"> El orden de las palabras</label>
+            <label><input type="radio" name="q3" value="b"> Las terminaciones de caso</label>
+            <label><input type="radio" name="q3" value="c"> El género del sustantivo</label>
+          </div>
+          <div class="result" id="result3"></div>
+        </div>
+
+        <div class="quiz-question">
+          <p><strong>Pregunta 4:</strong> ¿Cuál es la forma léxica de κόσμον?</p>
+          <div class="quiz-options">
+            <label><input type="radio" name="q4" value="a"> κόσμος</label>
+            <label><input type="radio" name="q4" value="b"> κόσμο</label>
+            <label><input type="radio" name="q4" value="c"> κόσμοι</label>
+          </div>
+          <div class="result" id="result4"></div>
+        </div>
+
+        <div class="quiz-question">
+          <p><strong>Pregunta 5:</strong> ¿Qué declinación siguen las raíces que terminan en ómicron?</p>
+          <div class="quiz-options">
+            <label><input type="radio" name="q5" value="a"> Primera declinación</label>
+            <label><input type="radio" name="q5" value="b"> Segunda declinación</label>
+            <label><input type="radio" name="q5" value="c"> Tercera declinación</label>
+          </div>
+          <div class="result" id="result5"></div>
+        </div>
+
+        <button onclick="checkAnswers()">Comprobar Respuestas</button>
+      </div>
+    </section>
+  </div>
+  <footer>
+    <img src="https://i.postimg.cc/wMJ2bCgV/mas-logos.jpg" alt="Logos adicionales">
+    <p id="foot">@Copyright Sección educativa del ministerio: "Vivos para Servir"</p>
+  </footer>
+  <script>
+    function checkAnswers() {
+      const answers = {
+        q1: 'a', // Respuesta correcta para la pregunta 1
+        q2: 'b', // Respuesta correcta para la pregunta 2
+        q3: 'b', // Respuesta correcta para la pregunta 3
+        q4: 'a', // Respuesta correcta para la pregunta 4
+        q5: 'b', // Respuesta correcta para la pregunta 5
+      };
+
+      for (const question in answers) {
+        const selectedOption = document.querySelector(`input[name="${question}"]:checked`);
+        const resultElement = document.getElementById(`result${question.slice(1)}`);
+        if (selectedOption) {
+          if (selectedOption.value === answers[question]) {
+            resultElement.textContent = "¡Correcto!";
+            resultElement.className = "result correct";
+          } else {
+            resultElement.textContent = "Incorrecto. La respuesta correcta es: " + answers[question];
+            resultElement.className = "result incorrect";
+          }
+        } else {
+          resultElement.textContent = "Por favor, selecciona una respuesta.";
+          resultElement.className = "result";
+        }
+      }
+    }
+  </script>
+</body>
+</html>

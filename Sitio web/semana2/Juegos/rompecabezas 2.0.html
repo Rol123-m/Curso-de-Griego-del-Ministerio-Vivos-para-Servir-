@@ -1,0 +1,677 @@
+ <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rompecabezas de Terminaciones - Griego Koiné</title>
+    <style>
+        :root {
+            --primary-color: #2c5e1a;
+            --secondary-color: #4a8c2c;
+            --accent-color: #f1c40f;
+            --light-color: #f8f9fa;
+            --dark-color: #343a40;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
+            min-height: 100vh;
+            padding-bottom: 60px;
+        }
+
+        header {
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1rem 0;
+            box-shadow: var(--shadow);
+            position: relative;
+            z-index: 10;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+        }
+
+        .logo {
+            height: 80px;
+            transition: var(--transition);
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            text-align: center;
+            margin: 20px 0;
+            color: var(--dark-color);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .game-container {
+            max-width: 800px;
+            margin: 30px auto;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-container::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color), var(--accent-color));
+            z-index: -1;
+            filter: blur(20px);
+            opacity: 0.3;
+        }
+
+        .question-container {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .word-root {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: 20px 0;
+            font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+        }
+
+        .instructions {
+            font-size: 1.2rem;
+            color: var(--dark-color);
+            margin-bottom: 20px;
+            background: rgba(74, 140, 44, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 5px solid var(--secondary-color);
+        }
+
+        .endings-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .ending {
+            background: var(--light-color);
+            border: 2px dashed var(--secondary-color);
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 1.3rem;
+            cursor: grab;
+            transition: var(--transition);
+            user-select: none;
+            font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+        }
+
+        .ending:hover {
+            background: var(--accent-color);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+
+        .ending:active {
+            cursor: grabbing;
+        }
+
+        .drop-zone {
+            min-height: 80px;
+            border: 3px dashed var(--primary-color);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px auto;
+            padding: 15px;
+            background: rgba(44, 94, 26, 0.05);
+            transition: var(--transition);
+            max-width: 300px;
+        }
+
+        .drop-zone.highlight {
+            background: rgba(241, 196, 15, 0.3);
+            border-color: var(--accent-color);
+        }
+
+        .drop-zone.correct {
+            background: rgba(46, 204, 113, 0.3);
+            border-color: #2ecc71;
+        }
+
+        .drop-zone.incorrect {
+            background: rgba(231, 76, 60, 0.3);
+            border-color: #e74c3c;
+        }
+
+        .feedback {
+            text-align: center;
+            font-size: 1.2rem;
+            margin: 20px 0;
+            min-height: 30px;
+            font-weight: bold;
+        }
+
+        .correct-feedback {
+            color: #27ae60;
+        }
+
+        .incorrect-feedback {
+            color: #e74c3c;
+        }
+
+        .next-btn {
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            display: block;
+            margin: 0 auto;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+
+        .next-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .next-btn:active {
+            transform: translateY(0);
+        }
+
+        .next-btn.hidden {
+            display: none;
+        }
+
+        .progress-container {
+            width: 100%;
+            background: #e0e0e0;
+            border-radius: 10px;
+            margin: 20px 0;
+            height: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            width: 0%;
+            transition: width 0.4s ease;
+        }
+
+        .score-display {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--dark-color);
+        }
+
+        footer {
+            background: linear-gradient(to right, var(--dark-color), #495057);
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 50px;
+        }
+
+        .footer-logo {
+            height: 60px;
+            margin-bottom: 15px;
+        }
+
+        #foot {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .game-container {
+                padding: 20px;
+                margin: 20px;
+            }
+
+            .word-root {
+                font-size: 2rem;
+            }
+
+            .ending {
+                padding: 10px 15px;
+                font-size: 1.1rem;
+            }
+        }
+
+        /* Efectos 3D */
+        .card-3d {
+            transform: rotateY(5deg);
+            box-shadow: -15px 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .ending.dragging {
+            transform: scale(1.1);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            z-index: 100;
+            opacity: 0.8;
+        }
+    </style>
+    <script>
+        // Verificar autenticación al cargar la página
+        if(!localStorage.getItem('authenticated')) {
+            window.location.href = "../login.html";
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <img src="https://i.postimg.cc/QtgrGy8X/verde.png" alt="Logo del ministerio Vivos para servir" class="logo">
+            <h1>Rompecabezas de Terminaciones - Griego Koiné</h1>
+        </div>
+    </header>
+
+    <div class="game-container card-3d">
+        <div class="progress-container">
+            <div class="progress-bar" id="progress"></div>
+        </div>
+
+        <div class="score-display" id="score">
+            Puntuación: 0 | Pregunta 0 de 10
+        </div>
+
+        <div class="question-container">
+            <div class="instructions" id="instruction">
+                Arrastra la terminación correcta para formar el:
+            </div>
+            <div class="word-root" id="root"></div>
+            <div class="drop-zone" id="drop-zone">
+                <span id="drop-text">Arrastra aquí la terminación</span>
+            </div>
+        </div>
+
+        <div class="endings-container" id="endings"></div>
+
+        <div class="feedback" id="feedback"></div>
+
+        <button class="next-btn hidden" id="next-btn">Siguiente</button>
+    </div>
+
+    <footer>
+        <img src="https://i.postimg.cc/wMJ2bCgV/mas-logos.jpg" alt="Logos adicionales" class="footer-logo">
+        <p id="foot">@Copyright Sección educativa del ministerio: "Vivos para Servir"</p>
+    </footer>
+
+    <script>
+        // Vocabulario y declinaciones
+        const vocabulary = [
+            { root: "βασιλεί", word: "βασιλεία", gender: "feminine", meaning: "reino" },
+            { root: "ἔργ", word: "ἔργον", gender: "neuter", meaning: "obra" },
+            { root: "καιρ", word: "καιρός", gender: "masculine", meaning: "tiempo" },
+            { root: "ὡρ", word: "ὥρα", gender: "feminine", meaning: "hora" },
+            { root: "ἀγγελ", word: "ἄγγελος", gender: "masculine", meaning: "ángel" },
+            { root: "ἀνθρωπ", word: "ἄνθρωπος", gender: "masculine", meaning: "hombre" },
+            { root: "ἀποστολ", word: "ἀπόστολος", gender: "masculine", meaning: "apóstol" },
+            { root: "Γαλιλαι", word: "Γαλιλαία", gender: "feminine", meaning: "Galilea" },
+            { root: "γραφ", word: "γραφή", gender: "feminine", meaning: "escritura" },
+            { root: "δοξ", word: "δόξα", gender: "feminine", meaning: "gloria" },
+            { root: "ἐσχατ", word: "ἔσχατος", gender: "masculine", meaning: "último" },
+            { root: "ζω", word: "ζωή", gender: "feminine", meaning: "vida" },
+            { root: "θε", word: "θεός", gender: "masculine", meaning: "Dios" },
+            { root: "καρδι", word: "καρδία", gender: "feminine", meaning: "corazón" },
+            { root: "κοσμ", word: "κόσμος", gender: "masculine", meaning: "mundo" },
+            { root: "λογ", word: "λόγος", gender: "masculine", meaning: "palabra" },
+            { root: "σαββατ", word: "σάββατον", gender: "neuter", meaning: "sábado" },
+            { root: "φων", word: "φωνή", gender: "feminine", meaning: "voz" },
+            { root: "Χριστ", word: "Χριστός", gender: "masculine", meaning: "Cristo" }
+        ];
+
+        // Declinaciones por género y caso
+        const endings = {
+            masculine: {
+                nominative: {
+                    singular: ["ος"],
+                    plural: ["οι"]
+                },
+                genitive: {
+                    singular: ["ου"],
+                    plural: ["ων"]
+                },
+                dative: {
+                    singular: ["ῳ"],
+                    plural: ["οις"]
+                },
+                accusative: {
+                    singular: ["ον"],
+                    plural: ["ους"]
+                }
+            },
+            feminine: {
+                nominative: {
+                    singular: ["α", "η"],
+                    plural: ["αι"]
+                },
+                genitive: {
+                    singular: ["ας", "ης"],
+                    plural: ["ων"]
+                },
+                dative: {
+                    singular: ["ᾳ", "ῃ"],
+                    plural: ["αις"]
+                },
+                accusative: {
+                    singular: ["αν", "ην"],
+                    plural: ["ας"]
+                } 
+            },
+            neuter: {
+                nominative: {
+                    singular: ["ον", "α"],
+                    plural: ["α"]
+                },
+                genitive: {
+                    singular: ["ου"],
+                    plural: ["ων"]
+                },
+                dative: {
+                    singular: ["ῳ"],
+                    plural: ["οις"]
+                },
+                accusative: {
+                    singular: ["ον", "α"],
+                    plural: ["α"]
+                } 
+            }
+        };
+
+        const cases = ["nominative", "genitive", "dative", "accusative"];
+        const numbers = ["singular", "plural"];
+        const genders = ["masculine", "feminine", "neuter"];
+
+        // Variables del juego
+        let currentQuestion = 0;
+        let score = 0;
+        const totalQuestions = 10;
+        let currentCorrectEnding = "";
+        let usedWords = [];
+        let currentWord = null;
+
+        // Elementos del DOM
+        const rootElement = document.getElementById('root');
+        const instructionElement = document.getElementById('instruction');
+        const endingsContainer = document.getElementById('endings');
+        const dropZone = document.getElementById('drop-zone');
+        const dropText = document.getElementById('drop-text');
+        const feedbackElement = document.getElementById('feedback');
+        const nextButton = document.getElementById('next-btn');
+        const progressBar = document.getElementById('progress');
+        const scoreElement = document.getElementById('score');
+
+        // Inicializar el juego
+        function initGame() {
+            currentQuestion = 0;
+            score = 0;
+            usedWords = [];
+            updateScore();
+            generateQuestion();
+            setupDragAndDrop();
+        }
+
+        // Generar una nueva pregunta
+        function generateQuestion() {
+            if (currentQuestion >= totalQuestions) {
+                endGame();
+                return;
+            }
+
+            // Reiniciar estado
+            feedbackElement.textContent = "";
+            feedbackElement.className = "feedback";
+            nextButton.classList.add('hidden');
+            dropZone.className = "drop-zone";
+            dropText.textContent = "Arrastra aquí la terminación";
+            endingsContainer.innerHTML = "";
+            dropZone.style.display = "flex";
+
+            // Seleccionar una palabra aleatoria que no se haya usado
+            let availableWords = vocabulary.filter(word => !usedWords.includes(word.word));
+            if (availableWords.length === 0) {
+                availableWords = vocabulary; // Si todas se usaron, reiniciar
+                usedWords = [];
+            }
+
+            currentWord = availableWords[Math.floor(Math.random() * availableWords.length)];
+            usedWords.push(currentWord.word);
+
+            // Seleccionar caso, número y género
+            const randomCase = cases[Math.floor(Math.random() * cases.length)];
+            const randomNumber = numbers[Math.floor(Math.random() * numbers.length)];
+            const gender = currentWord.gender;
+
+            // Obtener terminaciones posibles
+            const possibleEndings = endings[gender][randomCase][randomNumber];
+            currentCorrectEnding = possibleEndings[Math.floor(Math.random() * possibleEndings.length)];
+
+            // Crear terminaciones incorrectas
+            let incorrectEndings = [];
+            const allEndings = getAllEndingsForGender(gender);
+            
+            // Asegurarse de que las terminaciones incorrectas sean diferentes a la correcta
+            while (incorrectEndings.length < 3) {
+                const randomEnding = allEndings[Math.floor(Math.random() * allEndings.length)];
+                if (randomEnding !== currentCorrectEnding && !incorrectEndings.includes(randomEnding)) {
+                    incorrectEndings.push(randomEnding);
+                }
+            }
+
+            // Mezclar terminaciones correctas e incorrectas
+            const allEndingsToShow = [currentCorrectEnding, ...incorrectEndings];
+            shuffleArray(allEndingsToShow);
+
+            // Mostrar en la interfaz
+            rootElement.textContent = currentWord.root;
+            instructionElement.textContent = `Arrastra la terminación correcta para formar el ${translateCase(randomCase)} ${translateNumber(randomNumber)} ${translateGender(gender)} de "${currentWord.meaning}"`;
+
+            // Crear elementos de terminaciones
+            allEndingsToShow.forEach(ending => {
+                const endingElement = document.createElement('div');
+                endingElement.className = 'ending';
+                endingElement.textContent = ending;
+                endingElement.draggable = true;
+                endingElement.dataset.ending = ending;
+                endingsContainer.appendChild(endingElement);
+            });
+
+            // Actualizar progreso
+            updateProgress();
+        }
+
+        // Obtener todas las terminaciones para un género
+        function getAllEndingsForGender(gender) {
+            let allEndings = [];
+            for (const caseName in endings[gender]) {
+                for (const number in endings[gender][caseName]) {
+                    allEndings = allEndings.concat(endings[gender][caseName][number]);
+                }
+            }
+            return [...new Set(allEndings)]; // Eliminar duplicados
+        }
+
+        // Configurar drag and drop
+        function setupDragAndDrop() {
+            // Eliminar event listeners anteriores si existen
+            document.querySelectorAll('.ending').forEach(el => {
+                el.removeEventListener('dragstart', dragStart);
+            });
+
+            dropZone.removeEventListener('dragover', dragOver);
+            dropZone.removeEventListener('dragenter', dragEnter);
+            dropZone.removeEventListener('dragleave', dragLeave);
+            dropZone.removeEventListener('drop', drop);
+
+            // Añadir nuevos event listeners
+            document.addEventListener('dragstart', function(e) {
+                if (e.target.classList.contains('ending')) {
+                    dragStart(e);
+                }
+            });
+
+            dropZone.addEventListener('dragover', dragOver);
+            dropZone.addEventListener('dragenter', dragEnter);
+            dropZone.addEventListener('dragleave', dragLeave);
+            dropZone.addEventListener('drop', drop);
+        }
+
+        function dragStart(e) {
+            e.dataTransfer.setData('text/plain', e.target.dataset.ending);
+            e.target.classList.add('dragging');
+        }
+
+        function dragOver(e) {
+            e.preventDefault();
+        }
+
+        function dragEnter(e) {
+            e.preventDefault();
+            dropZone.classList.add('highlight');
+        }
+
+        function dragLeave() {
+            dropZone.classList.remove('highlight');
+        }
+
+        function drop(e) {
+            e.preventDefault();
+            dropZone.classList.remove('highlight');
+            
+            const ending = e.dataTransfer.getData('text/plain');
+            const draggedElement = document.querySelector('.ending.dragging');
+            
+            if (draggedElement) {
+                draggedElement.classList.remove('dragging');
+            }
+
+            dropText.textContent = ending;
+            
+            // Verificar si es correcto
+            if (ending === currentCorrectEnding) {
+                dropZone.classList.add('correct');
+                feedbackElement.textContent = "¡Correcto!";
+                feedbackElement.classList.add('correct-feedback');
+                score++;
+                updateScore();
+            } else {
+                dropZone.classList.add('incorrect');
+                feedbackElement.textContent = `Incorrecto. La terminación correcta era: ${currentCorrectEnding}`;
+                feedbackElement.classList.add('incorrect-feedback');
+            }
+            
+            nextButton.classList.remove('hidden');
+        }
+
+        // Traducir términos gramaticales
+        function translateCase(caseName) {
+            const translations = {
+                nominative: "nominativo",
+                genitive: "genitivo",
+                dative: "dativo",
+                accusative: "acusativo"
+            };
+            return translations[caseName] || caseName;
+        }
+
+        function translateNumber(number) {
+            return number === "singular" ? "singular" : "plural";
+        }
+
+        function translateGender(gender) {
+            const translations = {
+                masculine: "masculino",
+                feminine: "femenino",
+                neuter: "neutro"
+            };
+            return translations[gender] || gender;
+        }
+
+        // Actualizar puntuación
+        function updateScore() {
+            scoreElement.textContent = `Puntuación: ${score} | Pregunta ${currentQuestion + 1} de ${totalQuestions}`;
+        }
+
+        // Actualizar barra de progreso
+        function updateProgress() {
+            const progress = ((currentQuestion + 1) / totalQuestions) * 100;
+            progressBar.style.width = `${progress}%`;
+        }
+
+        // Finalizar el juego
+        function endGame() {
+            rootElement.textContent = "¡Juego completado!";
+            instructionElement.textContent = `Tu puntuación final: ${score} de ${totalQuestions}`;
+            endingsContainer.innerHTML = "";
+            dropZone.style.display = "none";
+            feedbackElement.textContent = "";
+            nextButton.classList.add('hidden');
+            
+            // Mostrar botón para reiniciar
+            const restartButton = document.createElement('button');
+            restartButton.textContent = "Jugar de nuevo";
+            restartButton.className = "next-btn";
+            restartButton.addEventListener('click', initGame);
+            endingsContainer.appendChild(restartButton);
+        }
+
+        // Mezclar array
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        // Event listeners
+        nextButton.addEventListener('click', function() {
+            currentQuestion++;
+            generateQuestion();
+        });
+
+        // Iniciar el juego al cargar la página
+        window.addEventListener('load', initGame);
+    </script>
+</body>
+</html>

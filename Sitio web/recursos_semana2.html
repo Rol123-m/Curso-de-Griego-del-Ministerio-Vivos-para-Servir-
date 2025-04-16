@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recursos - Semana 2: Sustantivos y Casos Gramaticales</title>
+    <link rel="stylesheet" href="circle.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+         
+        header {
+            background-color: #5a7fb5;
+            color: white;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+        h2 {
+            color: #5a7fb5;
+            border-bottom: 2px solid #5a7fb5;
+            padding-bottom: 5px;
+            margin-top: 30px;
+        }
+        .resource-section {
+            background-color: white;
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .resource-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .resource-item {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+        }
+        .resource-item:last-child {
+            border-bottom: none;
+        }
+        .resource-icon {
+            margin-right: 10px;
+            color: #5a7fb5;
+            font-weight: bold;
+        }
+        a {
+            color: #2c5e9e;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        a:hover {
+            color: #1a3d6b;
+            text-decoration: underline;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 8px 15px;
+            background-color: #5a7fb5;
+            color: white;
+            border-radius: 4px;
+            text-decoration: none;
+        }
+        .back-link:hover {
+            background-color: #4a6fa5;
+        }
+        .game-item {
+            background-color: #f0f7ff;
+            border-left: 4px solid #5a7fb5;
+        }
+        .game-description {
+            font-size: 0.9em;
+            color: #666;
+            margin-left: 25px;
+            margin-top: 5px;
+            font-style: italic;
+        }
+        .recommended {
+            font-weight: bold;
+            color: #e67e22;
+        }
+        a:first-child {
+            color: #f0f7ff;
+        }
+    </style>
+   
+    <script>
+        // Verificar autenticación al cargar la página
+        if(!localStorage.getItem('authenticated')) {
+            window.location.href = "../login.html";
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Recursos - Semana 2: Sustantivos y Casos Gramaticales</h1>
+        <p>Materiales de estudio y práctica sobre sustantivos y declinaciones griegas</p>
+    </header>
+
+    <div class="resource-section">
+        <h2>📚 Materiales de Estudio</h2>
+        <ul class="resource-list">
+            <li class="resource-item">
+                <span class="resource-icon">📄</span>
+                <a href="contenido_privado.html">PDF Contenido de la semana 2</a>
+            </li>
+            <li class="resource-item">
+                <span class="resource-icon">📖</span>
+                <a href="semana2/HTML/1. Introducción a  sustantivos.html">Introducción a los sustantivos</a>
+            </li>
+            <li class="resource-item">
+                <span class="resource-icon">🔠</span>
+                <a href="semana2/HTML/3. casos gramaticales.html">Casos gramaticales</a>
+            </li>
+            <li class="resource-item">
+                <span class="resource-icon">🔄</span>
+                <a href="semana2/HTML/4. Introducción a las declinaciones.html">Introducción a las declinaciones</a>
+            </li>
+            <li class="resource-item">
+                <span class="resource-icon">📝</span>
+                <a href="semana2/HTML/5. Repaso de Nominativo y acusativo.html">Repaso de Nominativo y Acusativo</a>
+            </li>
+            <li class="resource-item">
+                <span class="resource-icon">📑</span>
+                <a href="semana2/HTML/6. Resumen de la semana 2.html">Resumen de la semana 2</a>
+            </li>
+            <li class="resource-item">
+                <span class="resource-icon">📖</span>
+                <a href="semana2/HTML/7. Vocabulario semana 2.html">Vocabulario semana 2</a>
+            </li>
+            <li class="resource-item">
+                <span class="resource-icon">✏️</span>
+                <a href="contenido_privado.html">Examen semana 2</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="resource-section">
+        <h2>🎮 Juegos Interactivos</h2>
+        <ul class="resource-list">
+            <li class="resource-item game-item">
+                <span class="resource-icon">🔄</span>
+                <a href="semana2/Juegos/Empareja las palabras.html">Empareja las palabras</a>
+                <div class="game-description">Arrastra la palabra griega hasta su correspondiente traducción</div>
+            </li>
+            <li class="resource-item game-item">
+                <span class="resource-icon">❓</span>
+                <a href="semana2/Juegos/Juego de palabras.html">Juego de palabras</a>
+                <div class="game-description">Selecciona la respuesta correcta entre las opciones</div>
+            </li>
+            <li class="resource-item game-item recommended">
+                <span class="resource-icon">⏱️</span>
+                <a href="semana2/Juegos/contrareloj.html">Contra reloj (recomendado)</a>
+                <div class="game-description">Responde correctamente antes de que se acabe el tiempo</div>
+            </li>
+            <li class="resource-item game-item">
+                <span class="resource-icon">🧩</span>
+                <a href="semana2/Juegos/rompecabezas 2.0.html">Rompecabezas de terminaciones</a>
+                <div class="game-description">Combina las terminaciones con los casos correctos</div>
+            </li>
+        </ul>
+    </div>
+
+    <a href="index.html" class="back-link">← Volver a la selección de semanas</a>
+    <script src="auth.js"></script>
+    <script src="user-tooltip.js"></script>
+     
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semana 1 - Curso de Griego Koiné</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .logo img {
+            max-width: 150px;
+        }
+        .step {
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .step.completed {
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+            color: #155724;
+        }
+        .step:hover {
+            background-color: #f8f9fa;
+        }
+        .step:active {
+            background-color: #e2e6ea;
+        }
+        .step h3 {
+            margin: 0;
+            font-size: 18px;
+        }
+        .step p {
+            margin: 5px 0 0;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <!-- Espacio para insertar el logo del ministerio -->
+            <img src=" https://i.postimg.cc/wMJ2bCgV/mas-logos.jpg" alt="Logo del Ministerio">
+        </div>
+        <h1>Documento Guía para la Semana 1 del Curso de Griego Koiné</h1>
+        <h2>Objetivo de la Semana 1: Leer el texto de Juan 1.1-5 en griego</h2>
+        
+        <div class="step" onclick="completeStep(this)">
+            <h3>Paso 1: Dominar el alfabeto</h3>
+            <p>Aprender la canción del alfabeto, identificar cada letra, conocer su nombre y sonido, y saber escribir cada letra.</p>
+        </div>
+        
+        <div class="step" onclick="completeStep(this)">
+            <h3>Paso 2: Dominar los diptongos y acentos</h3>
+            <p>Aprender su escritura y sonido, identificarlos en la lectura, y conocer la diferencia entre la marca de espíritu débil y fuerte.</p>
+        </div>
+        
+        <div class="step" onclick="completeStep(this)">
+            <h3>Paso 3: Comprender los principios de división en sílabas</h3>
+            <p>No es necesario aprender las 7 reglas de memoria, solamente entenderlas.</p>
+        </div>
+        
+        <div class="step" onclick="completeStep(this)">
+            <h3>Paso 4: Aprender el vocabulario de la semana 1</h3>
+            <p>Saber identificar la palabra, conocer su significado. El examen de vocabulario es opcional.</p>
+        </div>
+        
+        <div class="step" onclick="completeStep(this)">
+            <h3>Paso 5: Leer el texto de Juan 1.1-5</h3>
+            <p>No es necesario entenderlo, pero debe ser capaz de pronunciar cada palabra correctamente, identificar los acentos y marcas de espíritu, y los diptongos.</p>
+        </div>
+        
+        <div class="step" onclick="completeStep(this)">
+            <h3>Paso 6: Vencer el examen de la semana 1</h3>
+            <p>Realizar el examen y enviar la nota a su facilitador para archivar el progreso.</p>
+        </div>
+    </div>
+
+    <script>
+        function completeStep(step) {
+            if (!step.classList.contains('completed')) {
+                step.classList.add('completed');
+                alert('¡Paso completado! Avanzas al siguiente nivel.');
+            }
+        }
+    </script>
+</body>
+</html>

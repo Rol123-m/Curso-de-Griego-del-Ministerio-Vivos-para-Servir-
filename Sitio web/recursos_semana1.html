@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recursos - Semana 1: Alfabeto Griego</title>
+    <link rel="stylesheet" href="circle.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+        header {
+            background-color: #4a6fa5;
+            color: white;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+        h2 {
+            color: #4a6fa5;
+            border-bottom: 2px solid #4a6fa5;
+            padding-bottom: 5px;
+            margin-top: 30px;
+        }
+        .resource-section {
+            background-color: white;
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .resource-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .resource-item {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+        }
+        .resource-item:last-child {
+            border-bottom: none;
+        }
+        .resource-icon {
+            margin-right: 10px;
+            color: #4a6fa5;
+            font-weight: bold;
+        }
+        a {
+            color: #2c5e9e;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        a:hover {
+            color: #1a3d6b;
+            text-decoration: underline;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 8px 15px;
+            background-color: #4a6fa5;
+            color: white;
+            border-radius: 4px;
+            text-decoration: none;
+        }
+        .back-link:hover {
+            background-color: #3a5a8c;
+        }
+        .game-item {
+            background-color: #f0f7ff;
+            border-left: 4px solid #4a6fa5;
+        }
+        a:first-child {
+            color: #f0f7ff;
+        }
+                .user-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #6f42c1;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-left: 10px;
+        }
+
+    </style>
+    <script>
+        // Verificar autenticación al cargar la página
+        if(!localStorage.getItem('authenticated')) {
+            window.location.href = "../login.html";
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Recursos - Semana 1: Alfabeto Griego</h1>
+        <p>Materiales de estudio y juegos para aprender el alfabeto griego</p>
+    </header>
+
+    <div class="resource-section">
+        <h2>📚 Materiales de Estudio</h2>
+        <ul class="resource-list">
+            <li class="resource-item">
+                <span class="resource-icon">▶️</span>
+                <a href="contenido_privado.html">Canción del alfabeto (Video)</a>
+            </li>
+            <li class="resource-item">
+                <span class="resource-icon">🔤</span>
+                <a href="semana1/HTML/alfabeto.html">Alfabeto griego completo</a>
+            </li>
+            <li class="resource-item">
+                <span class="resource-icon">´</span>
+                <a href="semana1/HTML/acentos.html">Guía de acentos griegos</a>
+            </li>
+            <li class="resource-item">
+                <span class="resource-icon">✂️</span>
+                <a href="semana1/HTML/silabas.html">División de sílabas</a>
+            </li>
+            <li class="resource-item">
+                <span class="resource-icon">📖</span>
+                <a href="semana1/HTML/vocabulario1.html">Vocabulario básico</a>
+            </li>
+            <li class="resource-item">
+                <span class="resource-icon">📝</span>
+                <a href="contenido_privado.html">Examen de la semana 1</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="resource-section">
+        <h2>🎮 Juegos Interactivos</h2>
+        <p class="note">(Disponibles solo en computadora)</p>
+        <ul class="resource-list">
+            <li class="resource-item game-item">
+                <span class="resource-icon">🃏</span>
+                <a href="semana1/Juegos/cartas solo en la computadora.html">Juego de cartas del vocabulario1</a>
+            </li>
+            <li class="resource-item game-item">
+                <span class="resource-icon">🔠</span>
+                <a href="semana1/Juegos/juego de palabras, solo en la computadora.html">Juego de palabras griegas</a>
+            </li>
+            <li class="resource-item game-item">
+                <span class="resource-icon">🎲</span>
+                <a href="semana1/Juegos/simulator2.0 solo en la computadora.html">Simulador de escritura 2.0</a>
+            </li>
+        </ul>
+    </div>
+
+    <a href="index.html" class="back-link">← Volver a la selección de semanas</a>
+    <script src="auth.js"></script>
+    <script src="user-tooltip.js"></script>
+</body>
+</html>

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recursos - Semana 3: Artículo Definido y Traducción</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+        .user-initial-circle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #6f42c1;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+        header {
+            background-color: #6f42c1;
+            color: white;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+        h2 {
+            color: #6f42c1;
+            border-bottom: 2px solid #6f42c1;
+            padding-bottom: 5px;
+            margin-top: 30px;
+        }
+        .resource-section {
+            background-color: white;
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .resource-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .resource-item {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+        }
+        .resource-item:last-child {
+            border-bottom: none;
+        }
+        .resource-icon {
+            margin-right: 10px;
+            color: #6f42c1;
+            font-weight: bold;
+        }
+        a {
+            color: #5a32a3;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        a:hover {
+            color: #3a1d6b;
+            text-decoration: underline;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 8px 15px;
+            background-color: #6f42c1;
+            color: white;
+            border-radius: 4px;
+            text-decoration: none;
+        }
+        .back-link:hover {
+            background-color: #5a32a3;
+        }
+        .game-item {
+            background-color: #f5f0ff;
+            border-left: 4px solid #6f42c1;
+        }
+        .game-description {
+            font-size: 0.9em;
+            color: #666;
+            margin-left: 25px;
+            margin-top: 5px;
+            font-style: italic;
+        }
+        .recommended {
+            font-weight: bold;
+            color: #e67e22;
+        }
+        a:first-child {
+            color: #f0f7ff;
+        }
+    </style>
+    <script>
+        // Verificar autenticación al cargar la página
+        if(!localStorage.getItem('authenticated')) {
+            window.location.href = "../login.html";
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Recursos - Semana 3: Artículo Definido y Traducción</h1>
+        <p>Materiales para dominar el artículo definido y prácticas de traducción</p>
+    </header>
+
+    <div class="resource-section">
+        <h2>📚 Materiales de Estudio</h2>
+        <ul class="resource-list">
+            <li class="resource-item">
+                <span class="resource-icon">📄</span>
+                <a href="contenido_privado.html">PDF Contenido de la semana 3</a>
+            </li>
+            <li class="resource-item">
+                <span class="resource-icon">🔤</span>
+                <a href="semana3/HTML/1. Artículo Definido.html">Artículo Definido</a>
+            </li>
+            <li class="resource-item">
+                <span class="resource-icon">📖</span>
+                <a href="semana3/HTML/2. Aticulo Definido, continuación.html">Artículo Definido, continuación</a>
+            </li>
+            <li class="resource-item">
+                <span class="resource-icon">✏️</span>
+                <a href="semana3/HTML/3. Mas sobre sustantivos.html">Más sobre sustantivos</a>
+            </li>
+            <li class="resource-item">
+                <span class="resource-icon">🌍</span>
+                <a href="semana3/HTML/4. Traducción.html">Práctica de Traducción</a>
+            </li>
+            <li class="resource-item">
+                <span class="resource-icon">📖</span>
+                <a href="semana3/HTML/6. vocabulario3.html">Vocabulario semana 3</a>
+            </li>
+            <li class="resource-item">
+                <span class="resource-icon">✏️</span>
+                <a href="contenido_privado.html">Examen semana 3</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="resource-section">
+        <h2>🎮 Juegos Interactivos</h2>
+        <ul class="resource-list">
+            <li class="resource-item game-item">
+                <span class="resource-icon">🔄</span>
+                <a href="semana3/Juegos/3. Empareja las palabras.html">Empareja las palabras</a>
+                <div class="game-description">Arrastra la palabra griega hasta su correspondiente traducción</div>
+            </li>
+            <li class="resource-item game-item">
+                <span class="resource-icon">❓</span>
+                <a href="semana3/Juegos/4.juego de palabras, solo en la computadora.html">Juego de palabras</a>
+                <div class="game-description">Selecciona la respuesta correcta entre las opciones</div>
+            </li>
+            <li class="resource-item game-item recommended">
+                <span class="resource-icon">🖊️</span>
+                <a href="semana3/Juegos/1. Completa el articulo.html">Completa el artículo (recomendado)</a>
+                <div class="game-description">Selecciona entre las opciones para llenar los espacios en blanco</div>
+            </li>
+            <li class="resource-item game-item">
+                <span class="resource-icon">🌍</span>
+                <a href="semana3/Juegos/traducción.html">Ejercicio de traducción</a>
+                <div class="game-description">Practica traduciendo frases simples</div>
+            </li>
+            <li class="resource-item game-item">
+                <span class="resource-icon">⏱️</span>
+                <a href="semana3/Juegos/contrareloj.html">Contrarreloj</a>
+                <div class="game-description">El mismo juego de la semana 2 - Responde antes de que se acabe el tiempo</div>
+            </li>
+        </ul>
+    </div>
+
+    <a href="../index.html" class="back-link">← Volver a la selección de semanas</a>
+    <script src="auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Clasificador Rápido - Griego Koiné</title>
+    <style>
+        :root {
+            --color-primary: #2c3e50;
+            --color-secondary: #27ae60;
+            --color-accent: #e74c3c;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            min-height: 100vh;
+        }
+
+        header {
+            text-align: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        header img {
+            height: 80px;
+        }
+
+        .game-container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+
+        .screen {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s;
+            text-align: center;
+        }
+
+        .screen.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .timer {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--color-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px auto;
+            font-size: 1.5em;
+            transition: all 0.3s;
+        }
+
+        .word-display {
+            font-size: 2.5em;
+            margin: 30px 0;
+            font-family: 'Arial Unicode MS', sans-serif;
+        }
+
+        .options-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .option-btn {
+            padding: 15px;
+            border: 2px solid var(--color-secondary);
+            border-radius: 15px;
+            background: transparent;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1.1em;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .option-btn:hover {
+            background: var(--color-secondary);
+            transform: scale(1.05);
+        }
+
+        .score-screen {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 20px;
+            animation: bounceIn 1s;
+        }
+
+        .feedback {
+            font-size: 1.5em;
+            margin: 20px;
+            height: 30px;
+        }
+
+        .correct {
+            color: #2ecc71;
+        }
+
+        .incorrect {
+            color: #e74c3c;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background: var(--color-secondary);
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        #restartBtn {
+            margin: 20px auto;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            background: var(--color-secondary);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: block;
+        }
+
+        #restartBtn:hover {
+            transform: scale(1.05);
+            background: #2ecc71;
+        }
+
+        #finalScore {
+            font-size: 1.8em;
+            margin: 20px 0;
+            color: #f1c40f;
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; transform: translateY(-20px); }
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            60% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            margin-top: 50px;
+        }
+    </style>
+    <script>
+        // Verificar autenticación al cargar la página
+        if(!localStorage.getItem('authenticated')) {
+            window.location.href = "../login.html";
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <img src="https://i.postimg.cc/QtgrGy8X/verde.png" alt="Logo Vivos para servir">
+    </header>
+
+    <div class="game-container">
+        <!-- Pantallas del juego -->
+        <div class="screen" id="level1">
+            <h2>Nivel 1: Género (30 segundos)</h2>
+            <div class="progress-bar"><div class="progress" id="progress1"></div></div>
+            <div class="timer">30</div>
+            <div class="word-display"></div>
+            <div class="feedback"></div>
+            <div class="options-container"></div>
+        </div>
+
+        <div class="screen" id="level2">
+            <h2>Nivel 2: Declinación (25 segundos)</h2>
+            <div class="progress-bar"><div class="progress" id="progress2"></div></div>
+            <div class="timer">25</div>
+            <div class="word-display"></div>
+            <div class="feedback"></div>
+            <div class="options-container"></div>
+        </div>
+
+        <div class="screen" id="level3">
+            <h2>Nivel 3: Caso (20 segundos)</h2>
+            <div class="progress-bar"><div class="progress" id="progress3"></div></div>
+            <div class="timer">20</div>
+            <div class="word-display"></div>
+            <div class="feedback"></div>
+            <div class="options-container"></div>
+        </div>
+
+        <div class="screen" id="level4">
+            <h2>Nivel 4: Completo (15 segundos)</h2>
+            <div class="progress-bar"><div class="progress" id="progress4"></div></div>
+            <div class="timer">15</div>
+            <div class="word-display"></div>
+            <div class="feedback"></div>
+            <div class="options-container"></div>
+        </div>
+
+        <div class="screen" id="finalScreen">
+            <div class="score-screen">
+                <h2>¡Bien hecho!</h2>
+                <p id="finalScore">Puntuación: 0 puntos</p>
+                <img src="https://i.postimg.cc/QtgrGy8X/verde.png" alt="Logo ministerio" style="height: 100px; animation: bounceIn 1s infinite alternate;">
+                <button id="restartBtn">Jugar de nuevo</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <img src="https://i.postimg.cc/wMJ2bCgV/mas-logos.jpg" alt="Logos adicionales">
+        <p id="foot">@Copyright Sección educativa del ministerio: "Vivos para Servir"</p>
+    </footer>
+
+    <script>
+        // Base de datos de palabras con diferentes casos
+        const wordsDatabase = {
+            // 1ª declinación (femenino)
+            "ἀγάπη": {
+                nominativo: "ἀγάπη",
+                genitivo: "ἀγάπης",
+                dativo: "ἀγάπῃ",
+                acusativo: "ἀγάπην",
+                gender: "femenino",
+                declension: 1,
+                number: "singular"
+            },
+            "βασιλεία": {
+                nominativo: "βασιλεία",
+                genitivo: "βασιλείας",
+                dativo: "βασιλείᾳ",
+                acusativo: "βασιλείαν",
+                gender: "femenino",
+                declension: 1,
+                number: "singular"
+            },
+            "ὥρα": {
+                nominativo: "ὥρα",
+                genitivo: "ὥρας",
+                dativo: "ὥρᾳ",
+                acusativo: "ὥραν",
+                gender: "femenino",
+                declension: 1,
+                number: "singular"
+            },
+            "Γαλιλαία": {
+                nominativo: "Γαλιλαία",
+                genitivo: "Γαλιλαίας",
+                dativo: "Γαλιλαίᾳ",
+                acusativo: "Γαλιλαίαν",
+                gender: "femenino",
+                declension: 1,
+                number: "singular"
+            },
+            "γραφή": {
+                nominativo: "γραφή",
+                genitivo: "γραφῆς",
+                dativo: "γραφῇ",
+                acusativo: "γραφήν",
+                gender: "femenino",
+                declension: 1,
+                number: "singular"
+            },
+            "δόξα": {
+                nominativo: "δόξα",
+                genitivo: "δόξης",
+                dativo: "δόξῃ",
+                acusativo: "δόξαν",
+                gender: "femenino",
+                declension: 1,
+                number: "singular"
+            },
+            "ζωή": {
+                nominativo: "ζωή",
+                genitivo: "ζωῆς",
+                dativo: "ζωῇ",
+                acusativo: "ζωήν",
+                gender: "femenino",
+                declension: 1,
+                number: "singular"
+            },
+            "καρδία": {
+                nominativo: "καρδία",
+                genitivo: "καρδίας",
+                dativo: "καρδίᾳ",
+                acusativo: "καρδίαν",
+                gender: "femenino",
+                declension: 1,
+                number: "singular"
+            },
+            "φωνή": {
+                nominativo: "φωνή",
+                genitivo: "φωνῆς",
+                dativo: "φωνῇ",
+                acusativo: "φωνήν",
+                gender: "femenino",
+                declension: 1,
+                number: "singular"
+            },
+            
+            // 2ª declinación (masculino)
+            "ἄνθρωπος": {
+                nominativo: "ἄνθρωπος",
+                genitivo: "ἀνθρώπου",
+                dativo: "ἀνθρώπῳ",
+                acusativo: "ἄνθρωπον",
+                gender: "masculino",
+                declension: 2,
+                number: "singular"
+            },
+            "ἀπόστολος": {
+                nominativo: "ἀπόστολος",
+                genitivo: "ἀποστόλου",
+                dativo: "ἀποστόλῳ",
+                acusativo: "ἀπόστολον",
+                gender: "masculino",
+                declension: 2,
+                number: "singular"
+            },
+            "θεός": {
+                nominativo: "θεός",
+                genitivo: "θεοῦ",
+                dativo: "θεῷ",
+                acusativo: "θεόν",
+                gender: "masculino",
+                declension: 2,
+                number: "singular"
+            },
+            "κόσμος": {
+                nominativo: "κόσμος",
+                genitivo: "κόσμου",
+                dativo: "κόσμῳ",
+                acusativo: "κόσμον",
+                gender: "masculino",
+                declension: 2,
+                number: "singular"
+            },
+            "λόγος": {
+                nominativo: "λόγος",
+                genitivo: "λόγου",
+                dativo: "λόγῳ",
+                acusativo: "λόγον",
+                gender: "masculino",
+                declension: 2,
+                number: "singular"
+            },
+            "Χριστός": {
+                nominativo: "Χριστός",
+                genitivo: "Χριστοῦ",
+                dativo: "Χριστῷ",
+                acusativo: "Χριστόν",
+                gender: "masculino",
+                declension: 2,
+                number: "singular"
+            },
+            
+            // 2ª declinación (neutro)
+            "ἔργον": {
+                nominativo: "ἔργον",
+                genitivo: "ἔργου",
+                dativo: "ἔργῳ",
+                acusativo: "ἔργον",
+                gender: "neutro",
+                declension: 2,
+                number: "singular"
+            },
+            "σάββατον": {
+                nominativo: "σάββατον",
+                genitivo: "σαββάτου",
+                dativo: "σαββάτῳ",
+                acusativo: "σάββατον",
+                gender: "neutro",
+                declension: 2,
+                number: "singular"
+            }
+        };
+
+        // Lista de palabras base (nominativo singular)
+        const baseWords = Object.keys(wordsDatabase);
+        
+        // Casos para el nivel 3
+        const cases = ["nominativo", "genitivo", "dativo", "acusativo"];
+
+        let currentLevel = 1;
+        let score = 0;
+        let timeLeft;
+        let timerInterval;
+        let currentWord;
+        let isAnswering = false;
+        let questionsAnswered = 0;
+        const QUESTIONS_PER_LEVEL = 10;
+
+        const levelConfig = {
+            1: {
+                questionType: 'gender',
+                options: ['masculino', 'femenino', 'neutro'],
+                time: 30,
+                title: 'Género'
+            },
+            2: {
+                questionType: 'declension',
+                options: ['1', '2', '3'],
+                time: 25,
+                title: 'Declinación'
+            },
+            3: {
+                questionType: 'case',
+                options: cases,
+                time: 20,
+                title: 'Caso'
+            },
+            4: {
+                questionType: 'all',
+                options: [],
+                time: 15,
+                title: 'Completo'
+            }
+        };
+
+        function startGame() {
+            currentLevel = 1;
+            score = 0;
+            questionsAnswered = 0;
+            showScreen(`level${currentLevel}`);
+            loadQuestion();
+            startTimer();
+        }
+
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+            const screen = document.getElementById(screenId);
+            screen.classList.add('active');
+            screen.querySelector('.timer').textContent = levelConfig[currentLevel].time;
+            updateProgressBar();
+        }
+
+        function updateProgressBar() {
+            const progress = (questionsAnswered / QUESTIONS_PER_LEVEL) * 100;
+            document.getElementById(`progress${currentLevel}`).style.width = `${progress}%`;
+        }
+
+        function startTimer() {
+            const timerElement = document.querySelector('.active .timer');
+            timeLeft = levelConfig[currentLevel].time;
+            timerElement.textContent = timeLeft;
+            
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                timerElement.textContent = timeLeft;
+                
+                if(timeLeft <= 0) {
+                    handleTimeOut();
+                }
+            }, 1000);
+        }
+
+        function loadQuestion() {
+            isAnswering = false;
+            
+            // Seleccionar una palabra base aleatoria
+            const baseWord = baseWords[Math.floor(Math.random() * baseWords.length)];
+            const wordData = wordsDatabase[baseWord];
+            
+            // Seleccionar un caso aleatorio (para niveles 3 y 4)
+            let currentCase = "nominativo";
+            if(currentLevel >= 3) {
+                currentCase = cases[Math.floor(Math.random() * cases.length)];
+            }
+            
+            // Crear el objeto currentWord con la forma declinada correcta
+            currentWord = {
+                word: wordData[currentCase],
+                gender: wordData.gender,
+                declension: wordData.declension,
+                case: currentCase,
+                number: wordData.number,
+                baseForm: baseWord
+            };
+            
+            const screen = document.querySelector('.active');
+            screen.querySelector('.word-display').textContent = currentWord.word;
+            screen.querySelector('.feedback').textContent = '';
+            
+            const optionsContainer = screen.querySelector('.options-container');
+            optionsContainer.innerHTML = '';
+            
+            let options = [];
+            
+            if(currentLevel === 4) {
+                // Para el nivel 4, creamos una opción correcta en formato compacto
+                const correctOption = `${capitalizeFirstLetter(currentWord.case)}, ${currentWord.number} ${currentWord.gender}, ${currentWord.declension}ª`;
+                
+                // Creamos opciones incorrectas
+                options = [correctOption];
+                
+                // Generamos 5 opciones incorrectas
+                while(options.length < 6) {
+                    const randomBaseWord = baseWords[Math.floor(Math.random() * baseWords.length)];
+                    const randomWordData = wordsDatabase[randomBaseWord];
+                    const randomCase = cases[Math.floor(Math.random() * cases.length)];
+                    
+                    if(randomBaseWord !== currentWord.baseForm) {
+                        // Creamos variaciones incorrectas
+                        let incorrectOption;
+                        const randomType = Math.floor(Math.random() * 4);
+                        
+                        switch(randomType) {
+                            case 0: // Cambiar género
+                                incorrectOption = `${capitalizeFirstLetter(currentWord.case)}, ${currentWord.number} ${randomWordData.gender}, ${currentWord.declension}ª`;
+                                break;
+                            case 1: // Cambiar declinación
+                                incorrectOption = `${capitalizeFirstLetter(currentWord.case)}, ${currentWord.number} ${currentWord.gender}, ${randomWordData.declension}ª`;
+                                break;
+                            case 2: // Cambiar caso
+                                incorrectOption = `${capitalizeFirstLetter(randomCase)}, ${currentWord.number} ${currentWord.gender}, ${currentWord.declension}ª`;
+                                break;
+                            case 3: // Cambiar número
+                                const newNumber = currentWord.number === "singular" ? "plural" : "singular";
+                                incorrectOption = `${capitalizeFirstLetter(currentWord.case)}, ${newNumber} ${currentWord.gender}, ${currentWord.declension}ª`;
+                                break;
+                        }
+                        
+                        if(!options.includes(incorrectOption)) {
+                            options.push(incorrectOption);
+                        }
+                    }
+                }
+            } else {
+                // Para niveles 1-3
+                const correct = currentWord[levelConfig[currentLevel].questionType];
+                options = [correct.toString()];
+                
+                // Obtenemos opciones incorrectas
+                const incorrectOptions = levelConfig[currentLevel].options.filter(o => o !== correct.toString());
+                
+                // Seleccionamos opciones incorrectas aleatorias
+                while(options.length < 3) {
+                    const randomOption = incorrectOptions[Math.floor(Math.random() * incorrectOptions.length)];
+                    if(!options.includes(randomOption)) {
+                        options.push(randomOption);
+                    }
+                }
+            }
+            
+            // Mezclamos las opciones
+            options = shuffleArray(options);
+            
+            // Creamos los botones
+            options.forEach(option => {
+                const button = document.createElement('button');
+                button.className = 'option-btn';
+                button.textContent = option;
+                button.onclick = () => {
+                    if(!isAnswering) {
+                        isAnswering = true;
+                        checkAnswer(option);
+                    }
+                };
+                optionsContainer.appendChild(button);
+            });
+        }
+
+        function capitalizeFirstLetter(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
+
+        function shuffleArray(array) {
+            return array.sort(() => Math.random() - 0.5);
+        }
+
+        function checkAnswer(selected) {
+            clearInterval(timerInterval);
+            
+            let isCorrect = false;
+            let correctAnswer = '';
+            let pointsEarned = 0;
+            
+            if(currentLevel === 4) {
+                correctAnswer = `${capitalizeFirstLetter(currentWord.case)}, ${currentWord.number} ${currentWord.gender}, ${currentWord.declension}ª`;
+                isCorrect = selected === correctAnswer;
+            } else {
+                const correct = currentWord[levelConfig[currentLevel].questionType].toString();
+                isCorrect = selected === correct;
+                correctAnswer = correct;
+            }
+
+            const feedbackElement = document.querySelector('.active .feedback');
+            if(isCorrect) {
+                feedbackElement.textContent = '¡Correcto!';
+                feedbackElement.className = 'feedback correct';
+                pointsEarned = timeLeft * currentLevel;
+                score += pointsEarned;
+                console.log(`+${pointsEarned} puntos (Total: ${score})`);
+            } else {
+                feedbackElement.textContent = `Incorrecto. La respuesta correcta era: ${correctAnswer}`;
+                feedbackElement.className = 'feedback incorrect';
+                timeLeft = Math.max(0, timeLeft - 5);
+                document.querySelector('.active .timer').textContent = timeLeft;
+            }
+            
+            questionsAnswered++;
+            updateProgressBar();
+            
+            setTimeout(() => {
+                if(questionsAnswered < QUESTIONS_PER_LEVEL) {
+                    loadQuestion();
+                    startTimer();
+                } else {
+                    if(currentLevel < 4) {
+                        currentLevel++;
+                        questionsAnswered = 0;
+                        showScreen(`level${currentLevel}`);
+                        loadQuestion();
+                        startTimer();
+                    } else {
+                        endGame();
+                    }
+                }
+            }, 1500);
+        }
+
+        function handleTimeOut() {
+            clearInterval(timerInterval);
+            const feedbackElement = document.querySelector('.active .feedback');
+            
+            if(currentLevel === 4) {
+                const correctAnswer = `${capitalizeFirstLetter(currentWord.case)}, ${currentWord.number} ${currentWord.gender}, ${currentWord.declension}ª`;
+                feedbackElement.textContent = `Se acabó el tiempo. La respuesta era: ${correctAnswer}`;
+            } else {
+                const correct = currentWord[levelConfig[currentLevel].questionType].toString();
+                feedbackElement.textContent = `Se acabó el tiempo. La respuesta era: ${correct}`;
+            }
+            
+            feedbackElement.className = 'feedback incorrect';
+            
+            questionsAnswered++;
+            updateProgressBar();
+            
+            setTimeout(() => {
+                if(questionsAnswered < QUESTIONS_PER_LEVEL) {
+                    loadQuestion();
+                    startTimer();
+                } else {
+                    if(currentLevel < 4) {
+                        currentLevel++;
+                        questionsAnswered = 0;
+                        showScreen(`level${currentLevel}`);
+                        loadQuestion();
+                        startTimer();
+                    } else {
+                        endGame();
+                    }
+                }
+            }, 1500);
+        }
+
+        function endGame() {
+            clearInterval(timerInterval);
+            showScreen('finalScreen');
+            
+            // Mostrar puntuación final
+            const finalScoreElement = document.getElementById('finalScore');
+            finalScoreElement.textContent = `Puntuación final: ${score} puntos`;
+            console.log(`Puntuación final: ${score} puntos`);
+            
+            // Configurar el botón de reinicio
+            const restartBtn = document.getElementById('restartBtn');
+            restartBtn.onclick = function() {
+                console.log("Reiniciando juego...");
+                startGame();
+            };
+        }
+
+        // Iniciar el juego al cargar la página
+        window.onload = function() {
+            startGame();
+        };
+    </script>
+</body>
+</html>

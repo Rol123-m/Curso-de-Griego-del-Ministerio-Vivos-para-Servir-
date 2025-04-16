@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cerrar sesión</title>
+    <script>
+        // Limpiar autenticación y redirigir al login
+        localStorage.removeItem('authenticated');
+        localStorage.removeItem('username');
+        window.location.href = "login.html";
+    </script>
+</head>
+<body>
+    <p>Cerrando sesión...</p>
+</body>
+</html>

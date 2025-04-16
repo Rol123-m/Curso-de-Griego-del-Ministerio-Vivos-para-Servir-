@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aprendiendo Griego Koiné: División en Sílabas</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+    }
+    header {
+      background-color: #4CAF50;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      display: flex;
+    
+    }
+    img {
+      width: 170px;
+      height: 140px;}
+    h1 {
+      margin: 0;
+      font-size: 2.5rem;
+      margin-left: 300px;
+    }
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      background: white;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+      color: #4CAF50;
+      margin-top: 0;
+    }
+    .pronunciation {
+      background-color: #e8f5e9;
+      padding: 15px;
+      border-left: 5px solid #4CAF50;
+      margin: 20px 0;
+    }
+    .rules {
+      background-color: #fff3e0;
+      padding: 15px;
+      border-left: 5px solid #ff9800;
+      margin: 20px 0;
+    }
+    .rules ul {
+      list-style-type: decimal;
+      padding-left: 20px;
+    }
+    .rules li {
+      margin-bottom: 10px;
+    }
+    .quiz {
+      background-color: #fff3e0;
+      padding: 15px;
+      border-left: 5px solid #ff9800;
+      margin: 20px 0;
+    }
+    .quiz-question {
+      margin-bottom: 15px;
+    }
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .quiz-options label {
+      display: block;
+      padding: 10px;
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      cursor: pointer;
+    }
+    .quiz-options label:hover {
+      background-color: #f1f1f1;
+    }
+    .quiz-options input[type="radio"] {
+      margin-right: 10px;
+    }
+    .result {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    .correct {
+      color: green;
+    }
+    .incorrect {
+      color: red;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    footer {
+      display: flex;
+      width: 100%;
+      margin-top: 80px;
+      background-color: #ffffff;
+      padding: 50px;
+      padding-bottom: 20px;
+    }
+    #foot {
+      text-align: center;
+      margin-left: 300px;
+      font-size: 16;
+    }
+  </style>
+  <script>
+    // Verificar autenticación al cargar la página
+    if(!localStorage.getItem('authenticated')) {
+        window.location.href = "../login.html";
+    }
+</script>
+</head>
+<body>
+  <header>
+    <img src=" https://i.postimg.cc/QtgrGy8X/verde.png" alt="LOgo del ministerio Vivos para servir">
+ <h1>Aprendiendo Griego Koiné</h1>
+</header>
+  <div class="container">
+    <section>
+      <h2>Introducción a la Silabificación</h2>
+      <div class="pronunciation">
+        <p>Para pronunciar una palabra en griego, es necesario dividirla en sílabas. Este proceso se llama <strong>silabificación</strong>, y hay dos formas de aprenderlo:</p>
+        <ol>
+          <li><strong>Intuición:</strong> Si eres un hablante nativo de español, puedes confiar en tu intuición, ya que las palabras en griego se silabifican de manera similar a las palabras en inglés.</li>
+          <li><strong>Reglas:</strong> Aprender las reglas básicas de silabificación, que te ayudarán a dividir las palabras correctamente.</li>
+        </ol>
+        <p>Es esencial dominar este proceso, ya que te permitirá pronunciar las palabras de manera consistente, memorizarlas con mayor facilidad y comunicarte efectivamente con tus compañeros.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Reglas de Silabificación</h2>
+      <div class="rules">
+        <p>Aquí están las reglas básicas para dividir palabras en griego:</p>
+        <ul>
+          <li><strong>1. Una vocal o diptongo por sílaba:</strong> Cada sílaba contiene una vocal o diptongo. Por ejemplo: <strong>ἀ - κη - κό - α - μεν - μαρ - τυ - ροῦ - μεν</strong>.</li>
+          <li><strong>2. Consonante sola con la vocal siguiente:</strong> Una consonante sola (no un grupo) va con la vocal siguiente. Ejemplo: <strong>ἑ - ω - ρά - κα - μεν - ἐ - θε - α - σά - με - θα</strong>. Si la consonante es la última letra de la palabra, va con la vocal anterior.</li>
+          <li><strong>3. División de vocales consecutivas:</strong> Dos vocales consecutivas que no forman un diptongo se dividen. Ejemplo: <strong>ἐ - θε - α - σά - με - θα</strong> y <strong>Ἠ - σα - ΐ - ας</strong>.</li>
+          <li><strong>4. Grupos de consonantes no pronunciables juntas:</strong> Si un grupo de consonantes no se puede pronunciar junto, se divide, y la primera consonante va con la vocal anterior. Ejemplo: <strong>ἔμ - προ - σθεν</strong> y <strong>ἀρ - χῆς</strong>.</li>
+          <li><strong>5. Grupos de consonantes pronunciables juntas:</strong> Si un grupo de consonantes se puede pronunciar junto, va con la vocal siguiente. Ejemplo: <strong>Χρι - στός</strong> y <strong>γρα - φή</strong>. Esto incluye grupos con μ o ν como segunda letra, como en <strong>ἐ - πί - γνω - σις</strong> y <strong>ἔ - θνε - σιν</strong>.</li>
+          <li><strong>6. Consonantes dobles:</strong> Las consonantes dobles se dividen. Ejemplo: <strong>ἀ - παγ - γέλ - λο - μεν</strong> y <strong>παρ - ρη - σί - α</strong>.</li>
+          <li><strong>7. Palabras compuestas:</strong> Las palabras compuestas se dividen donde se unen. Ejemplo: <strong>ἀντι - χριστός</strong> y <strong>ἐκ - βάλλω</strong>.</li>
+        </ul>
+        <p><strong>Nota importante:</strong> Estas reglas fueron tomadas del libro: "Basics of Biblical Greek of William Mounce"</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Practica la Silabificación</h2>
+      <div class="quiz">
+        <div class="quiz-question">
+          <p><strong>Pregunta 1:</strong> ¿Cuántas sílabas tiene la palabra "ἀγάπη"?</p>
+          <div class="quiz-options">
+            <label><input type="radio" name="q1" value="a"> 2</label>
+            <label><input type="radio" name="q1" value="b"> 3</label>
+            <label><input type="radio" name="q1" value="c"> 4</label>
+          </div>
+          <div class="result" id="result1"></div>
+        </div>
+
+        <div class="quiz-question">
+          <p><strong>Pregunta 2:</strong> ¿Cómo se divide la palabra "Χριστός"?</p>
+          <div class="quiz-options">
+            <label><input type="radio" name="q2" value="a"> Χρι - στός</label>
+            <label><input type="radio" name="q2" value="b"> Χ - ριστός</label>
+            <label><input type="radio" name="q2" value="c"> Χριστ - ός</label>
+          </div>
+          <div class="result" id="result2"></div>
+        </div>
+
+        <div class="quiz-question">
+          <p><strong>Pregunta 3:</strong> ¿Qué regla se aplica en la palabra "ἔμπορος"?</p>
+          <div class="quiz-options">
+            <label><input type="radio" name="q3" value="a"> Consonante sola con la vocal siguiente</label>
+            <label><input type="radio" name="q3" value="b"> Grupos de consonantes no pronunciables juntas</label>
+            <label><input type="radio" name="q3" value="c"> Consonantes dobles</label>
+          </div>
+          <div class="result" id="result3"></div>
+        </div>
+
+        <button onclick="checkAnswers()">Comprobar Respuestas</button>
+      </div>
+    </section>
+  </div>
+  <footer>
+    <img src="https://i.postimg.cc/wMJ2bCgV/mas-logos.jpg" alt="">
+   <p id="foot"> @Copyright Sección educativa del ministerio: "Vivos para Servir"</p>
+  </footer>
+  <script>
+    function checkAnswers() {
+      const answers = {
+        q1: 'b', // Respuesta correcta para la pregunta 1
+        q2: 'a', // Respuesta correcta para la pregunta 2
+        q3: 'b', // Respuesta correcta para la pregunta 3
+      };
+
+      for (const question in answers) {
+        const selectedOption = document.querySelector(`input[name="${question}"]:checked`);
+        const resultElement = document.getElementById(`result${question.slice(1)}`);
+        if (selectedOption) {
+          if (selectedOption.value === answers[question]) {
+            resultElement.textContent = "¡Correcto!";
+            resultElement.className = "result correct";
+          } else {
+            resultElement.textContent = "Incorrecto. La respuesta correcta es: " + answers[question];
+            resultElement.className = "result incorrect";
+          }
+        } else {
+          resultElement.textContent = "Por favor, selecciona una respuesta.";
+          resultElement.className = "result";
+        }
+      }
+    }
+  </script>
+</body>
+</html>
